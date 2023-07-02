@@ -1,0 +1,13 @@
+{
+  "value": "100000.99",
+  "size": -8,
+  "address": {
+    "street": [],
+    "zipCode": "mais que 8 caracteres",
+    "city": {},
+    "state": "mais que 8 caracteres"
+  },
+  "categoryToCreate": {
+    "name": "category3"
+  }
+}
