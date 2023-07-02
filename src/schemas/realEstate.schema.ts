@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { createAddress, address } from "./address.schema";
+import { scheduleReturn } from "./schedule.schema";
 
 const realEstate = z.object({
   id: z.number().positive(),
@@ -22,6 +23,17 @@ const createRealEstate = realEstate
     address: createAddress,
   });
 
-const read = createRealEstate.array();
+const returnRealEstateSchedule = realEstate.omit({ categoryId: true }).extend({
+  schedules: scheduleReturn.array(),
+});
 
-export { realEstate, createRealEstate, read };
+const realEstateReturn = realEstate.omit({ categoryId: true });
+const read = realEstateReturn.array();
+
+export {
+  realEstate,
+  createRealEstate,
+  read,
+  returnRealEstateSchedule,
+  realEstateReturn,
+};

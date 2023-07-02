@@ -1,11 +1,7 @@
-import { Schedule, User } from "../entities";
+import { User } from "../entities";
 import AppError from "../error";
-import { scheduleInterface, userInterface } from "../interfaces";
-import {
-  realEstateRepository,
-  scheduleRepository,
-  userRepository,
-} from "../repositories";
+import { realEstateInterface, scheduleInterface } from "../interfaces";
+import { realEstateRepository, scheduleRepository } from "../repositories";
 
 const create = async (
   body: scheduleInterface.CreateSchedule,
@@ -27,7 +23,9 @@ const create = async (
   return "Schedule created";
 };
 
-const read = async (realEstateId: string) => {
+const read = async (
+  realEstateId: string
+): Promise<realEstateInterface.ReturnRealEstateSchedule> => {
   const realEstate = await realEstateRepository.findOneBy({
     id: Number(realEstateId),
   });
@@ -39,7 +37,10 @@ const read = async (realEstateId: string) => {
     .leftJoinAndSelect("re.category", "ca")
     .leftJoinAndSelect("re.schedules", "s")
     .leftJoinAndSelect("s.user", "u")
+    .where("re.id = :realEstateId", { realEstateId })
     .getOne();
+
+  if (!schedules) throw new AppError("Real Estate not found", 404);
 
   return schedules;
 };

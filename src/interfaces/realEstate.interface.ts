@@ -7,4 +7,16 @@ type CreateRealEstate = z.infer<typeof realEstateSchema.createRealEstate>;
 
 type ReadRealEstate = z.infer<typeof realEstateSchema.read>;
 
-export { RealEstate, CreateRealEstate, ReadRealEstate };
+type ReturnRealEstateSchedule = z.infer<
+  typeof realEstateSchema.returnRealEstateSchedule
+>;
+
+type ReturnRealEstate = z.infer<typeof realEstateSchema.realEstateReturn>;
+
+export {
+  RealEstate,
+  CreateRealEstate,
+  ReadRealEstate,
+  ReturnRealEstateSchedule,
+  ReturnRealEstate,
+};

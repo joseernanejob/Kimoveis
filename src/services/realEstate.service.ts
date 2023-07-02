@@ -5,13 +5,12 @@ import {
   categoryRepository,
   realEstateRepository,
 } from "../repositories";
-import { realEstate } from "../schemas/realEstate.schema";
 
 const create = async ({
   address,
   categoryId,
   ...body
-}: realEstateInterface.CreateRealEstate): Promise<object | void> => {
+}: realEstateInterface.CreateRealEstate): Promise<realEstateInterface.ReturnRealEstate> => {
   const category = await categoryRepository.findOneBy({ id: categoryId });
 
   if (!category) throw new AppError("Category is not found", 404);
@@ -27,7 +26,7 @@ const create = async ({
   return realEstate;
 };
 
-const read = async (): Promise<object> => {
+const read = async (): Promise<realEstateInterface.ReadRealEstate> => {
   const realEstates = await realEstateRepository
     .createQueryBuilder("re")
     .leftJoinAndSelect("re.address", "address")

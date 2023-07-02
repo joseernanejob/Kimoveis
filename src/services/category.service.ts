@@ -1,7 +1,6 @@
 import AppError from "../error";
 import { categoryInterface } from "../interfaces";
-import { categoryRepository, realEstateRepository } from "../repositories";
-import { categorySchema } from "../schemas";
+import { categoryRepository } from "../repositories";
 
 const create = async (
   body: categoryInterface.CreateCategory

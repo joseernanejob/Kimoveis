@@ -6,7 +6,7 @@ import { userSchema } from "../schemas";
 
 const create = async (
   body: userInterface.UserCreate
-): Promise<userInterface.UserReturn | void> => {
+): Promise<userInterface.UserReturn> => {
   const user: User = userRepository.create(body);
   await userRepository.save(user);
 

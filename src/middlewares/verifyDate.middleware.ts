@@ -1,9 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import {
-  realEstateRepository,
-  scheduleRepository,
-  userRepository,
-} from "../repositories";
+import { scheduleRepository, userRepository } from "../repositories";
 import AppError from "../error";
 
 const verifyDate = async (
