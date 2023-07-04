@@ -13,14 +13,13 @@ const verifyDate = async (
   if (!user) throw new AppError("User not Found", 404);
   resp.locals = { ...resp.locals, user };
 
-  const scheduleUser = await scheduleRepository.findOneBy({
-    user: {
-      id: user.id,
-    },
-    date: date,
-    realEstate: realEstateId,
-    hour: hour,
-  });
+  const scheduleUser = await scheduleRepository
+    .createQueryBuilder("s")
+    .leftJoin("s.user", "u")
+    .where("u.id = :id", { id: user.id })
+    .andWhere("s.date = :date", { date })
+    .andWhere("s.hour = :hour", { hour })
+    .getOne();
 
   if (scheduleUser)
     throw new AppError(
@@ -28,10 +27,13 @@ const verifyDate = async (
       409
     );
 
-  const scheduleDate = await scheduleRepository.findOneBy({
-    date: date,
-    realEstate: realEstateId,
-  });
+  const scheduleDate = await scheduleRepository
+    .createQueryBuilder("s")
+    .leftJoin("s.realEstate", "re")
+    .where("re.id = :id", { id: realEstateId })
+    .andWhere("s.date = :date", { date })
+    .andWhere("s.hour = :hour", { hour })
+    .getOne();
 
   if (scheduleDate)
     throw new AppError(
